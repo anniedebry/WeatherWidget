@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WeatherApp.MainPage"
+    BackgroundImageSource="{DynamicResource AppBackground}">
+
+    <Grid RowDefinitions="Auto, *" Padding="10">
+
+        <!-- custom Transparent Toolbar -->
+        <HorizontalStackLayout
+            Grid.Row="0"
+            BackgroundColor="Transparent"
+            HorizontalOptions="Fill"
+            VerticalOptions="Start"
+            Spacing="15"
+            Padding="5">
+
+            <!-- city button opens action sheet -->
+            <Button
+                x:Name="CityButton"
+                Text="City"
+                BackgroundColor="Transparent"
+                TextColor="White"
+                FontAttributes="Bold"
+                Clicked="OnCityButtonClicked" />
+
+            
+            <!-- style button -->
+            <Button
+                Text="Style"
+                BackgroundColor="Transparent"
+                TextColor="White"
+                FontAttributes="Bold"
+                Clicked="OnStyleClicked"/> 
+
+        </HorizontalStackLayout>
+
+        <!-- main content below toolbar -->
+        <ScrollView Grid.Row="1" Padding="0,20,0,0">
+            <VerticalStackLayout Padding="20,0" Spacing="1">
+
+                <Label Text="{Binding CityName}" FontSize="30" HorizontalOptions="Center" TextColor="White" />
+
+                <Label Text="{Binding CurrentTemperature, StringFormat=' {0}°'}" FontSize="35" HorizontalOptions="Center" TextColor="White" />
+
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <Label Text="{Binding HighTemperature, StringFormat='↑ {0}'}" FontSize="15" TextColor="White" />
+                    <Label Text="{Binding LowTemperature, StringFormat='↓ {0}'}" FontSize="15" TextColor="White" />
+                </HorizontalStackLayout>
+
+                <CollectionView
+                    ItemsSource="{Binding HourlyForecast}"
+                    ItemsLayout="HorizontalList"
+                    HorizontalOptions="FillAndExpand"
+                    HeightRequest="100">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout Padding="5" HorizontalOptions="Center">
+                                <Label Text="{Binding Temperature}" HorizontalOptions="Center" TextColor="White" />
+                                <Image Source="{Binding IconSource}" Aspect="AspectFit" HeightRequest="40" WidthRequest="40" />
+                                <Label Text="{Binding Time}" HorizontalOptions="Center" TextColor="White" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>
